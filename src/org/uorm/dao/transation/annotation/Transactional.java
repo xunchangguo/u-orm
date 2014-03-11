@@ -1,0 +1,60 @@
+/**
+ * Copyright 2010-2016 the original author or authors.
+ * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.uorm.dao.transation.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.uorm.dao.transation.TransactionIsolationLevel;
+
+/**
+ * <bean class="org.guice.smh.dao.mybatis.common.MyBatisCommonDaoServiceImpl" id="myBatisCommonDaoService" singleton="true" transactionalIntercept="true">
+ *    <property name="commonDao" ref="guiceCommonDao"/>
+ * </bean>
+ * transactionalIntercept="true"
+ * 使用AOP自动管理事务
+ * @author <a href="mailto:xunchangguo@gmail.com">郭训长</a>
+ * @version 1.0.0
+ * ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝<br/>
+ * 修订日期                 修订人            描述<br/>
+ * 2012-3-26       郭训长            创建<br/>
+ */
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Transactional {
+
+	/**
+	 * Returns the constant indicating the transaction isolation level.
+	 *
+	 * @return the constant indicating the transaction isolation level.
+	 */
+	TransactionIsolationLevel isolationLevel() default TransactionIsolationLevel.NONE;
+	
+	/**
+	 * If true, the transaction will never committed but rather rolled back, useful for testing purposes.
+	 *
+	 * This parameter is false by default.
+	 *
+	 * @return if true, the transaction will never committed but rather rolled back, useful for testing purposes.
+	 */
+	boolean rollbackOnly() default false;
+}
